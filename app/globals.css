@@ -8,6 +8,13 @@
   box-sizing: border-box;
 }
 
+@layer base {
+  body {
+    @apply text-gray-600;
+    @apply leading-7;
+  }
+}
+
 .max-container {
   @apply mx-auto max-w-[1440px];
 }
@@ -17,9 +24,13 @@
 }
 
 .padding-x {
-  @apply px-4 md:px-10 lg:px-20;
+  @apply px-6 md:px-10 lg:px-20;
 }
 
 .padding-y {
   @apply py-4;
+}
+
+.primary-heading {
+  @apply text-4xl lg:text-6xl font-bold capitalize text-gray-700;
 }
