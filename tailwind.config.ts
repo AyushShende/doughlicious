@@ -7,7 +7,16 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'orange-600': '#d9480f',
+        'orange-500': '#E8590C',
+        'orange-400': '#fd7e14',
+        'orange-300': '#ff922b',
+        'orange-200': '#ffd8a8',
+        'orange-100': '#fff4e6',
+      },
+    },
   },
   plugins: [],
 };

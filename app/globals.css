@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.max-container {
+  @apply mx-auto max-w-[1440px];
+}
+
+.flexCenter {
+  @apply flex items-center justify-center;
+}
+
+.padding-x {
+  @apply px-4 md:px-10 lg:px-20;
+}
+
+.padding-y {
+  @apply py-4;
+}
