@@ -7,11 +7,11 @@ import Testimonials from '@/components/testimonials';
 
 export default function Home() {
   return (
-    <main>
+    <section>
       <Hero />
       <FeaturedPizza />
       <Delivery />
       <Testimonials />
-    </main>
+    </section>
   );
 }

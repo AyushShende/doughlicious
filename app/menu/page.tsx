@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function MenuPage() {
   return (
-    <main className="padding-y max-container overflow-hidden">
+    <section className="padding-y max-container overflow-hidden">
       <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
         <PizzaCard />
         <PizzaCard />
@@ -16,6 +16,6 @@ export default function MenuPage() {
         <PizzaCard />
         <PizzaCard />
       </div>
-    </main>
+    </section>
   );
 }
