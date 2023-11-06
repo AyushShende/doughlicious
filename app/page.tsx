@@ -3,6 +3,7 @@ import FeaturedPizza from '@/components/featuredPizza';
 import Hero from '@/components/hero';
 import Navbar from '@/components/navbar';
 import PizzaCard from '@/components/pizzaCard';
+import Testimonials from '@/components/testimonials';
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Hero />
       <FeaturedPizza />
       <Delivery />
+      <Testimonials />
     </main>
   );
 }
