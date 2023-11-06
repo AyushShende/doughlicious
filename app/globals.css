@@ -28,7 +28,7 @@
 }
 
 .padding-y {
-  @apply py-6;
+  @apply py-6 md:py-10;
 }
 
 .primary-heading {

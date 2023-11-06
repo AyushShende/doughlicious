@@ -1,8 +1,8 @@
 import Delivery from '@/components/delivery';
 import FeaturedPizza from '@/components/featuredPizza';
+import Footer from '@/components/footer';
 import Hero from '@/components/hero';
 import Navbar from '@/components/navbar';
-import PizzaCard from '@/components/pizzaCard';
 import Testimonials from '@/components/testimonials';
 
 export default function Home() {
@@ -13,6 +13,7 @@ export default function Home() {
       <FeaturedPizza />
       <Delivery />
       <Testimonials />
+      <Footer />
     </main>
   );
 }

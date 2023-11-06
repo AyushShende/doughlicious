@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import Logo from './Logo';
+import Logo from '../logo';
 import { FaShoppingCart, FaBars } from 'react-icons/fa';
 
 export default function Navbar() {
   return (
-    <nav className="max-container flex justify-between items-center padding-x padding-y bg-orange-500 font-semibold text-white">
+    <nav className="max-container flex justify-between items-center padding-x py-4 bg-orange-500 font-semibold text-white">
       <Logo />
 
       <div className="hidden items-center gap-10 md:flex">
