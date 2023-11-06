@@ -1,3 +1,4 @@
+import Delivery from '@/components/delivery';
 import FeaturedPizza from '@/components/featuredPizza';
 import Hero from '@/components/hero';
 import Navbar from '@/components/navbar';
@@ -9,6 +10,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <FeaturedPizza />
+      <Delivery />
     </main>
   );
 }
