@@ -8,7 +8,7 @@ import Logo from '../logo';
 
 export default function Footer() {
   return (
-    <footer className="padding-y padding-x bg-orange-500 text-white">
+    <footer className="padding-y padding-x max-container bg-orange-500 text-white">
       <div className="gap-10 grid md:grid-cols-3 mb-2">
         <div className="space-y-4">
           <Logo />
