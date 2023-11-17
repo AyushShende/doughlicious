@@ -47,6 +47,8 @@ model User {
   role          String?   @default("user")
   accounts      Account[]
   sessions      Session[]
+  // User has many orders
+  orders        Order[]
 }
 
 model VerificationToken {
@@ -55,4 +57,48 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Pizza {
+  id          String   @id @default(cuid())
+  title       String   @unique
+  image       String
+  description String
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  //single pizza can be a part of multiple orders
+  orderItems OrderItem[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  deliveryAddress String?
+  totalValue      Int?
+  // Order belongs to only one user
+  user            User        @relation(fields: [userId], references: [id])
+  userId          String
+  // Order has many orderitems
+  orderItems      OrderItem[]
+  orderStatus     String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+enum Size {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+model OrderItem {
+  id       String @id @default(cuid())
+  // OrderItem belongs to one Order and one Pizza
+  orderId  String
+  order    Order  @relation(fields: [orderId], references: [id])
+  pizzaId  String
+  pizza    Pizza  @relation(fields: [pizzaId], references: [id])
+  quantity Int
+  size     Size
 }

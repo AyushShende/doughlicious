@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Button from '../button';
 
-export default function PizzaCard() {
+import type { Pizza } from '@prisma/client';
+import Button from '@/components/button';
+
+export default function PizzaCard({ pizza }: { pizza: Pizza }) {
   return (
     <div className="w-72 rounded-xl p-4 shadow-xl">
       {/* CARD IMAGE */}
@@ -18,14 +20,14 @@ export default function PizzaCard() {
       {/* CARD CONTENT */}
       <div className="text-center">
         <p className="mb-2 truncate text-2xl font-bold capitalize text-gray-700">
-          Margherita
+          {pizza?.title}
         </p>
         <p className="mb-4 truncate text-center text-sm">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+          {pizza?.description}
         </p>
         <div className="flex items-center justify-around">
-          <p className="text-2xl font-bold">$50</p>
-          <Link href={`/pizzas/id`}>
+          <p className="text-2xl font-bold">₹{pizza?.price}</p>
+          <Link href={`/pizza/${pizza?.id}`}>
             <Button>Order now</Button>
           </Link>
         </div>

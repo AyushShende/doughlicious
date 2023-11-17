@@ -1,6 +1,7 @@
 import GitHubProvider, { GithubProfile } from 'next-auth/providers/github';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { NextAuthOptions } from 'next-auth';
+
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@/lib/db';
 
 export const authOptions: NextAuthOptions = {
@@ -25,11 +26,17 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt({ token, user }) {
-      if (user) token.role = user.role;
+      if (user) {
+        token.role = user.role;
+        token.id = user.id;
+      }
       return token;
     },
     session({ session, token }) {
-      if (session.user) session.user.role = token.role;
+      if (session.user) {
+        session.user.role = token.role;
+        session.user.id = token.sub;
+      }
       return session;
     },
   },

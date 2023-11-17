@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { shadows } from '../fonts';
+import { shadows } from '@/components/fonts';
 
 export default function Hero() {
   return (
