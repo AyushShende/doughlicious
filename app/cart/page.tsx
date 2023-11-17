@@ -1,7 +1,6 @@
 import Image from 'next/image';
 
-import { getCartSize } from '@/lib/data';
-import prisma from '@/lib/db';
+import { getCartSize, getOpenOrder } from '@/lib/data';
 import EmptyCart from '@/app/cart/EmptyCart';
 import CartSummary from '@/app/cart/CartSummary';
 
@@ -17,16 +16,7 @@ export default async function CartPage() {
     return <EmptyCart />;
   }
 
-  const order = await prisma.order.findFirst({
-    where: {
-      orderStatus: 'pending',
-    },
-    select: {
-      orderItems: {
-        select: { id: true, pizza: true, size: true, quantity: true },
-      },
-    },
-  });
+  const order = await getOpenOrder();
 
   return (
     <section className="padding-y padding-x max-container min-h-screen md:grid md:grid-cols-4 gap-6">
