@@ -5,6 +5,7 @@ import './globals.css';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import AuthProvider from '@/context/AuthProvider';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'Doughlicious',
@@ -23,6 +24,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <Toaster position="top-right" />
         </AuthProvider>
       </body>
     </html>

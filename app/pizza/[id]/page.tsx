@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
-import { getPizza } from '@/lib/data';
+import { getPizza } from '@/actions/queries/pizza';
 import PizzaOptions from '@/app/pizza/[id]/PizzaOptions';
 
 export default async function PizzaPage({
@@ -9,6 +10,10 @@ export default async function PizzaPage({
   params: { id: string };
 }) {
   const pizza = await getPizza(params.id);
+
+  if (!pizza) {
+    return notFound();
+  }
 
   return (
     <section className="padding-x padding-y max-container min-h-screen grid gap-4 md:grid-cols-2 md:gap-10">

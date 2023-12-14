@@ -1,33 +1,33 @@
 import Image from 'next/image';
 
-import { getCartSize, getOpenOrder } from '@/lib/data';
 import EmptyCart from '@/app/cart/EmptyCart';
 import CartSummary from '@/app/cart/CartSummary';
+import RemoveFromCartBtn from './RemoveFromCartBtn';
+import { fetchCartItems } from '@/actions/queries/cart';
 
 export const metadata = {
   title: 'Your Cart - Doughlicious',
 };
 
 export default async function CartPage() {
-  const cartSize = await getCartSize();
+  const cartItems = await fetchCartItems();
 
-  // EMPTY CART
-  if (!cartSize) {
+  if (!cartItems) {
     return <EmptyCart />;
   }
-
-  const order = await getOpenOrder();
 
   return (
     <section className="padding-y padding-x max-container min-h-screen md:grid md:grid-cols-4 gap-6">
       {/* CART ITEMS */}
       <div className="col-span-3 mb-6">
-        {order?.orderItems.map((item) => {
+        {cartItems.map((item) => {
           return (
             <div
               key={item.id}
-              className="flex flex-col sm:flex-row gap-2 rounded-lg mb-3 bg-gray-50 p-2"
+              className="flex flex-col sm:flex-row gap-2 relative rounded-lg mb-3 bg-gray-50 p-2"
             >
+              <RemoveFromCartBtn cartItemId={item.id} />
+
               <Image width={150} height={150} src="/pizza4.png" alt="pizza" />
               <div className="w-full space-y-2 p-4">
                 <div className="flex items-center gap-1">
@@ -51,7 +51,8 @@ export default async function CartPage() {
           );
         })}
       </div>
-      <CartSummary subtotal={400} />
+
+      <CartSummary cartItems={cartItems} />
     </section>
   );
 }

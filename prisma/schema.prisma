@@ -44,11 +44,11 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  role          String?   @default("user")
+  role          String?
   accounts      Account[]
   sessions      Session[]
-  // User has many orders
   orders        Order[]
+  Cart          Cart[]
 }
 
 model VerificationToken {
@@ -59,46 +59,63 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Pizza {
-  id          String   @id @default(cuid())
-  title       String   @unique
-  image       String
-  description String
-  price       Float
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  //single pizza can be a part of multiple orders
-  orderItems OrderItem[]
-}
-
-model Order {
-  id              String      @id @default(cuid())
-  deliveryAddress String?
-  totalValue      Int?
-  // Order belongs to only one user
-  user            User        @relation(fields: [userId], references: [id])
-  userId          String
-  // Order has many orderitems
-  orderItems      OrderItem[]
-  orderStatus     String
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-}
-
 enum Size {
   SMALL
   MEDIUM
   LARGE
 }
 
+model Pizza {
+  id          String      @id @default(cuid())
+  title       String      @unique
+  image       String
+  description String
+  price       Float
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+  cartItems   CartItem[]
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  totalValue  Float
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String
+  orderItems  OrderItem[]
+  orderStatus String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
 model OrderItem {
   id       String @id @default(cuid())
-  // OrderItem belongs to one Order and one Pizza
   orderId  String
   order    Order  @relation(fields: [orderId], references: [id])
   pizzaId  String
   pizza    Pizza  @relation(fields: [pizzaId], references: [id])
   quantity Int
   size     Size
+  price    Float
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  user      User?      @relation(fields: [userId], references: [id])
+  userId    String?
+  cartItems CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    String
+  pizzaId   String
+  pizza     Pizza    @relation(fields: [pizzaId], references: [id])
+  quantity  Int
+  size      Size
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

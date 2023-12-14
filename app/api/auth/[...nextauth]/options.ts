@@ -3,6 +3,7 @@ import { NextAuthOptions } from 'next-auth';
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@/lib/db';
+import { mergeCart } from '@/actions/cart/mergeCarts';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -38,6 +39,11 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.sub;
       }
       return session;
+    },
+  },
+  events: {
+    async signIn({ user: { id } }) {
+      await mergeCart(id);
     },
   },
 };

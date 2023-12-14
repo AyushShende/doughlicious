@@ -1,11 +1,13 @@
-import Link from 'next/link';
-
-import Button from '@/components/button';
 import PizzaCard from '@/components/pizzaCard';
-import { getPizzas } from '@/lib/data';
+import { getPizzas } from '@/actions/queries/pizza';
+import { notFound } from 'next/navigation';
 
 export default async function FeaturedPizza() {
   const pizzas = await getPizzas();
+  if (!pizzas) {
+    return notFound();
+  }
+
   return (
     <section className="padding-y max-container text-center">
       <h4 className="sub-heading">popular dishes</h4>
@@ -15,9 +17,6 @@ export default async function FeaturedPizza() {
           <PizzaCard key={pizza.id} pizza={pizza} />
         ))}
       </div>
-      <Link href="/menu">
-        <Button>View All</Button>
-      </Link>
     </section>
   );
 }

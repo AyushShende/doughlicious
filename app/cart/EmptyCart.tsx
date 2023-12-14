@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function EmptyCart() {
   return (
-    <main className="padding-y padding-x">
+    <section className="padding-y padding-x">
       <Image
         className="mx-auto mb-8"
         src="/empty_cart.svg"
@@ -20,6 +20,6 @@ export default function EmptyCart() {
           </Link>
         </p>
       </div>
-    </main>
+    </section>
   );
 }

@@ -16,6 +16,15 @@ const config: Config = {
         'orange-200': '#ffd8a8',
         'orange-100': '#fff4e6',
       },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle 0.2s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

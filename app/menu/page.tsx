@@ -1,5 +1,7 @@
+import { notFound } from 'next/navigation';
+
 import PizzaCard from '@/components/pizzaCard';
-import { getPizzas } from '@/lib/data';
+import { getPizzas } from '@/actions/queries/pizza';
 
 export const metadata = {
   title: 'Menu - Doughlicious',
@@ -7,6 +9,10 @@ export const metadata = {
 
 export default async function MenuPage() {
   const pizzas = await getPizzas();
+
+  if (!pizzas) {
+    return notFound();
+  }
 
   return (
     <section className="padding-y max-container min-h-screen overflow-hidden">

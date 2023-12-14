@@ -1,39 +1,32 @@
 'use client';
-
-import { useSession } from 'next-auth/react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import { useFormState } from 'react-dom';
+import toast from 'react-hot-toast';
 
-import Button from '@/components/button';
-import { addToCart } from '@/lib/actions';
 import { Size } from '@prisma/client';
+import FormButton from '@/components/formButton';
+import { addToCart } from '@/actions/cart/addToCart';
 
 export default function PizzaOptions() {
   const [quantity, setQuantity] = useState<number>(1);
   const [pizzaSize, setPizzaSize] = useState<Size>('SMALL');
 
   const { id } = useParams();
-  const { data } = useSession();
-  const router = useRouter();
 
-  const handleClick = async () => {
-    if (!data?.user) {
-      return router.push(`/api/auth/signin?callbackUrl=/pizza/${id}`);
-    }
-    try {
-      await addToCart({
-        quantity,
-        pizzaSize,
-        pizzaId: id as string,
-        userId: data?.user.id,
-        orderStatus: 'pending',
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [actionState, dispatch] = useFormState(
+    addToCart.bind(null, {
+      quantity,
+      pizzaSize,
+      pizzaId: id as string,
+    }),
+    { errors: {} }
+  );
 
+  if (actionState.errors._actionError) {
+    toast.error(actionState.errors._actionError?.join(', '));
+  }
   return (
     <>
       <select
@@ -63,9 +56,10 @@ export default function PizzaOptions() {
           <FaPlus />
         </button>
       </div>
-      <Button onClick={handleClick} className="rounded-lg">
-        Add to Cart
-      </Button>
+
+      <form action={dispatch}>
+        <FormButton>Add to Cart</FormButton>
+      </form>
     </>
   );
 }
