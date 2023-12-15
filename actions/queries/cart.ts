@@ -5,6 +5,7 @@ import prisma from '@/lib/db';
 import { getUser } from '../getUser';
 
 export const fetchCartItems = async () => {
+  noStore();
   try {
     const user = await getUser();
     let cartId;

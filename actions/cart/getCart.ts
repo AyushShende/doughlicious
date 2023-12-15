@@ -16,7 +16,11 @@ export async function getCart(): Promise<CartWithItems | null> {
       });
     } else {
       const anonymousCartId = cookies().get('anonymousCartId')?.value;
-      cart = await prisma.cart.findFirst({
+      if (!anonymousCartId) {
+        return null;
+      }
+
+      cart = await prisma.cart.findUnique({
         where: { id: anonymousCartId },
         include: { cartItems: true },
       });
