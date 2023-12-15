@@ -12,7 +12,7 @@ export async function createCheckoutSession(): Promise<ActionState> {
   const user = await getUser();
 
   if (!user) {
-    redirect('/api/auth/signin?callbackUrl=/cart');
+    redirect(`/api/auth/signin?callbackUrl=${headers().get('origin')}/cart`);
   }
 
   const cart = await prisma.cart.findFirst({
