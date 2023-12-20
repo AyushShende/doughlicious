@@ -7,7 +7,7 @@ import { Address } from '@prisma/client';
 import { useFormState } from 'react-dom';
 
 type AddressBoxProps = {
-  address: Address | null;
+  address?: Address | null;
 };
 
 export default function AddressBox({ address }: AddressBoxProps) {
