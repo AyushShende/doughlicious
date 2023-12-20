@@ -12,4 +12,14 @@ export type ActionState = {
   };
 };
 
+export type SaveAddressFormState = {
+  errors: {
+    street?: string[];
+    city?: string[];
+    country?: string[];
+    zip?: string[];
+    _actionError?: string[];
+  };
+};
+
 export type CartWithItems = Cart & { cartItems: CartItem[] };

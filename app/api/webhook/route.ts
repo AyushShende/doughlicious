@@ -29,10 +29,11 @@ export async function POST(req: Request) {
       const session = event.data.object as Stripe.Checkout.Session;
       const cartId = session.metadata?.cartId;
       const userId = session.metadata?.userId;
+      const addressId = session.metadata?.addressId;
 
-      if (!cartId || !userId) {
+      if (!cartId || !userId || !addressId) {
         return NextResponse.json(
-          { message: 'user Id and cart Id  is required' },
+          { message: 'missing fields in metadata' },
           {
             status: 400,
           }
@@ -41,9 +42,10 @@ export async function POST(req: Request) {
 
       const order = await prisma.order.create({
         data: {
-          totalValue: session.amount_total ?? 0,
+          totalValue: session.amount_total ? session.amount_total / 100 : 0,
           orderStatus: 'paid',
           userId,
+          addressId,
         },
       });
 

@@ -4,6 +4,8 @@ import EmptyCart from '@/app/cart/EmptyCart';
 import CartSummary from '@/app/cart/CartSummary';
 import RemoveFromCartBtn from './RemoveFromCartBtn';
 import { fetchCartItems } from '@/actions/queries/cart';
+import AddressBox from './AddressBox';
+import { fetchAddress } from '@/actions/queries/address';
 
 export const metadata = {
   title: 'Your Cart - Doughlicious',
@@ -11,6 +13,7 @@ export const metadata = {
 
 export default async function CartPage() {
   const cartItems = await fetchCartItems();
+  const address = await fetchAddress();
 
   if (!cartItems) {
     return <EmptyCart />;
@@ -52,7 +55,10 @@ export default async function CartPage() {
         })}
       </div>
 
-      <CartSummary cartItems={cartItems} />
+      <div className="space-y-4">
+        <AddressBox address={address} />
+        <CartSummary cartItems={cartItems} />
+      </div>
     </section>
   );
 }

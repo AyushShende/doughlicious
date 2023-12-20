@@ -7,17 +7,19 @@ import { cn } from '@/utils/cn';
 export default function FormButton({
   children,
   className,
+  disabled,
 }: {
   children: React.ReactNode;
   className?: string;
+  disabled?: boolean;
 }) {
   const { pending } = useFormStatus();
+
   return (
     <Button
       className={cn('text-lg', className)}
-      // className="rounded-lg"
       type="submit"
-      disabled={pending}
+      disabled={pending || disabled}
       isLoading={pending}
     >
       {children}

@@ -12,7 +12,7 @@ export async function createCheckoutSession(): Promise<ActionState> {
   const user = await getUser();
 
   if (!user) {
-    redirect(`/api/auth/signin?callbackUrl=${headers().get('origin')}/cart`);
+    redirect(`/api/auth/signin?callbackUrl=/cart`);
   }
 
   const cart = await prisma.cart.findFirst({
@@ -26,6 +26,18 @@ export async function createCheckoutSession(): Promise<ActionState> {
     return {
       errors: {
         _actionError: ['Database Error: Failed to retrieve cart and its items'],
+      },
+    };
+  }
+
+  const address = await prisma.address.findUnique({
+    where: { userId: user.id },
+  });
+
+  if (!address) {
+    return {
+      errors: {
+        _actionError: ['Database Error: Failed to retrieve delivery address'],
       },
     };
   }
@@ -56,6 +68,7 @@ export async function createCheckoutSession(): Promise<ActionState> {
       metadata: {
         cartId: cart.id,
         userId: user.id,
+        addressId: address.id,
       },
       customer_email: user?.email ?? '',
     });
