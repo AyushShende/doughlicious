@@ -1,5 +1,6 @@
-import CheckoutButton from './CheckoutButton';
 import { CartItem } from '@prisma/client';
+
+import CheckoutButton from './CheckoutButton';
 
 export type CartItemsWithPizza = CartItem & {
   pizza: {

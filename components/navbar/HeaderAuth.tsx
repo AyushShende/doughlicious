@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Button from '../button';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function HeaderAuth() {
   const session = useSession();
@@ -30,6 +31,12 @@ export default function HeaderAuth() {
         />
         {showOptions && (
           <div className="absolute top-14 bg-orange-50 text-orange-500 px-2 py-1 rounded">
+            {session.data.user.role === 'admin' && (
+              <Link onClick={handleClick} href={'/admin'}>
+                Dashboard
+              </Link>
+            )}
+
             <button className="cursor-pointer" onClick={() => signOut()}>
               Logout
             </button>

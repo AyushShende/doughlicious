@@ -1,5 +1,6 @@
-import prisma from '@/lib/db';
 import { unstable_noStore as noStore } from 'next/cache';
+
+import prisma from '@/lib/db';
 import { getUser } from '../getUser';
 
 export const fetchAddress = async () => {

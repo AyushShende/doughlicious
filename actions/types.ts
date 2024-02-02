@@ -1,4 +1,4 @@
-import { Cart, CartItem, Size } from '@prisma/client';
+import { Cart, CartItem, Order, Size } from '@prisma/client';
 
 export type AddToCartParams = {
   quantity: number;
@@ -23,3 +23,26 @@ export type SaveAddressFormState = {
 };
 
 export type CartWithItems = Cart & { cartItems: CartItem[] };
+
+export type PaidOrder = Order & {
+  user: {
+    name: string | null;
+  };
+  orderItems: {
+    quantity: number;
+    pizza: {
+      title: string;
+    };
+  }[];
+  address: {
+    street: string;
+    city: string;
+  };
+};
+
+export type OrderWithAddress = Order & {
+  address: {
+    street: string;
+    city: string;
+  };
+};

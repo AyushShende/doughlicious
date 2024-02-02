@@ -1,11 +1,12 @@
 'use client';
+
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useFormState } from 'react-dom';
 import toast from 'react-hot-toast';
-
 import { Size } from '@prisma/client';
+
 import FormButton from '@/components/formButton';
 import { addToCart } from '@/actions/cart/addToCart';
 

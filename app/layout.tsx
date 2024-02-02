@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
 
 import { inter } from '@/components/fonts';
 import './globals.css';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import AuthProvider from '@/context/AuthProvider';
-import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'Doughlicious',

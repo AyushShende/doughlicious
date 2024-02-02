@@ -1,8 +1,11 @@
 import type { Stripe } from 'stripe';
 import { NextResponse } from 'next/server';
+import { OrderStatus } from '@prisma/client';
 
 import { stripe } from '@/lib/stripe';
 import prisma from '@/lib/db';
+import { getSinglePaidOrder } from '@/actions/queries/order';
+import { supabaseClient } from '@/lib/supabase';
 
 export async function POST(req: Request) {
   let event: Stripe.Event;
@@ -43,7 +46,7 @@ export async function POST(req: Request) {
       const order = await prisma.order.create({
         data: {
           totalValue: session.amount_total ? session.amount_total / 100 : 0,
-          orderStatus: 'paid',
+          orderStatus: OrderStatus.Placed,
           userId,
           addressId,
         },
@@ -69,6 +72,20 @@ export async function POST(req: Request) {
       await prisma.cart.delete({
         where: { id: cartId },
       });
+
+      // Send Realtime Update
+      const displayOrderForAdmin = await getSinglePaidOrder(order.id);
+      if (displayOrderForAdmin) {
+        const OrderPlacedchannel = supabaseClient.channel('order_placed');
+
+        OrderPlacedchannel.send({
+          type: 'broadcast',
+          event: 'new_order',
+          payload: { newOrder: displayOrderForAdmin },
+        });
+
+        supabaseClient.removeChannel(OrderPlacedchannel);
+      }
 
       return NextResponse.json(
         { message: 'Order created successfully' },

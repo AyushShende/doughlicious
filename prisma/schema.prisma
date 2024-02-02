@@ -78,13 +78,20 @@ model Pizza {
   cartItems   CartItem[]
 }
 
+enum OrderStatus {
+  Placed
+  Preparing
+  OutForDelivery
+  Completed
+}
+
 model Order {
   id          String      @id @default(cuid())
   totalValue  Float
   user        User        @relation(fields: [userId], references: [id])
   userId      String
   orderItems  OrderItem[]
-  orderStatus String
+  orderStatus OrderStatus
   address     Address     @relation(fields: [addressId], references: [id])
   addressId   String
   createdAt   DateTime    @default(now())
@@ -94,7 +101,7 @@ model Order {
 model OrderItem {
   id       String @id @default(cuid())
   orderId  String
-  order    Order  @relation(fields: [orderId], references: [id])
+  order    Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
   pizzaId  String
   pizza    Pizza  @relation(fields: [pizzaId], references: [id])
   quantity Int

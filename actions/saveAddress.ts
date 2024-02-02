@@ -1,11 +1,12 @@
 'use server';
 
-import prisma from '@/lib/db';
-import { getUser } from './getUser';
-import { SaveAddressFormState } from './types';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+
+import prisma from '@/lib/db';
+import { getUser } from './getUser';
+import { SaveAddressFormState } from './types';
 
 const saveAddressSchema = z.object({
   street: z.string().min(4, {

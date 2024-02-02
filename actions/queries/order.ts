@@ -1,5 +1,6 @@
-import prisma from '@/lib/db';
 import { unstable_noStore as noStore } from 'next/cache';
+
+import prisma from '@/lib/db';
 import { getUser } from '../getUser';
 
 export async function getOrders() {
@@ -26,9 +27,60 @@ export async function getOrders() {
           select: { street: true, city: true },
         },
       },
+      orderBy: { createdAt: 'desc' },
     });
   } catch (error) {
     console.log(error);
     throw new Error('Database Error: Failed to fetch orders');
+  }
+}
+
+export async function getPaidOrders() {
+  noStore();
+  try {
+    const orders = await prisma.order.findMany({
+      where: { NOT: { orderStatus: 'Completed' } },
+      include: {
+        user: { select: { name: true } },
+        address: {
+          select: { street: true, city: true },
+        },
+        orderItems: {
+          select: { quantity: true, pizza: { select: { title: true } } },
+        },
+      },
+      orderBy: { createdAt: 'asc' },
+    });
+
+    if (!orders.length) {
+      return [];
+    }
+
+    return orders;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Database Error: Failed to fetch orders');
+  }
+}
+
+export async function getSinglePaidOrder(orderId: string) {
+  try {
+    return prisma.order.findUnique({
+      where: {
+        id: orderId,
+      },
+      include: {
+        user: { select: { name: true } },
+        address: {
+          select: { street: true, city: true },
+        },
+        orderItems: {
+          select: { quantity: true, pizza: { select: { title: true } } },
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error('Database Error: Failed to fetch order');
   }
 }

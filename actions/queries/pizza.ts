@@ -1,10 +1,10 @@
 import { unstable_noStore as noStore } from 'next/cache';
-import { cache } from 'react';
-
-import prisma from '@/lib/db';
 import { Pizza } from '@prisma/client';
 
+import prisma from '@/lib/db';
+
 export const getPizzas = (): Promise<Pizza[]> => {
+  noStore();
   try {
     return prisma.pizza.findMany();
   } catch (error) {
@@ -14,6 +14,7 @@ export const getPizzas = (): Promise<Pizza[]> => {
 };
 
 export const getPizza = (pizzaId: string) => {
+  noStore();
   try {
     return prisma.pizza.findUnique({
       where: { id: pizzaId },
