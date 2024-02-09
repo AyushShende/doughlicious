@@ -6,12 +6,9 @@ import { useFormStatus } from 'react-dom';
 export default function DeleteLoader() {
   const { pending } = useFormStatus();
 
-  if (!pending) {
-    return null;
-  }
-  return (
-    <div className="absolute inset-0 bg-orange-50 opacity-80 flex items-center justify-center">
-      <MdDelete className="animate-wiggle text-orange-500" size={60} />
+  return pending ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
+      <MdDelete className="animate-wiggle text-orange-500" size={40} />
     </div>
-  );
+  ) : null;
 }

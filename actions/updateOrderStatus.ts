@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 import prisma from '@/lib/db';
 import { supabaseClient } from '@/lib/supabase';
+import { redirect } from 'next/navigation';
 
 type UpdateOrderStatusProps = {
   orderStatus: OrderStatus;
@@ -42,4 +43,5 @@ export async function updateOrderStatus({
 
   revalidatePath('/orders');
   revalidatePath('/admin/order');
+  redirect('/admin/order');
 }

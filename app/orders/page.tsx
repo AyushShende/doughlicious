@@ -1,9 +1,11 @@
-import { getOrders } from '@/actions/queries/order';
+import { Metadata } from 'next';
+
+import { getOrders } from '@/queries/order';
 import EmptyOrder from './EmptyOrder';
 import OrderTable from './OrderTable';
 
-export const metadata = {
-  title: 'My Orders - Doughlicious',
+export const metadata: Metadata = {
+  title: 'Orders',
 };
 
 export default async function MyOrdersPage() {

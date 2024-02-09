@@ -13,13 +13,13 @@ type AddressBoxProps = {
 export default function AddressBox({ address }: AddressBoxProps) {
   const [actionState, dispatch] = useFormState(saveAddress, { errors: {} });
   return (
-    <form className="bg-gray-50 space-y-4 p-4" action={dispatch}>
+    <form className="bg-gray-50 rounded-lg space-y-4 p-4" action={dispatch}>
       <div className="flex justify-between items-center space-x-2">
         <label className="font-semibold" htmlFor="">
           Street:
         </label>
         <input
-          className="p-2  outline outline-2 rounded outline-blue-500 focus:outline-orange-400"
+          className="p-2 w-full outline outline-2 rounded outline-blue-500 focus:outline-orange-400"
           type="text"
           name="street"
           defaultValue={address?.street}
@@ -35,7 +35,7 @@ export default function AddressBox({ address }: AddressBoxProps) {
           City:
         </label>
         <input
-          className="p-2 w-fit outline outline-2 rounded outline-blue-500 focus:outline-orange-400"
+          className="p-2 w-full outline outline-2 rounded outline-blue-500 focus:outline-orange-400"
           type="text"
           name="city"
           defaultValue={address?.city}
@@ -49,7 +49,7 @@ export default function AddressBox({ address }: AddressBoxProps) {
           Country:
         </label>
         <input
-          className="p-2 w-fit outline outline-2 rounded outline-blue-500 focus:outline-orange-400"
+          className="p-2 w-full outline outline-2 rounded outline-blue-500 focus:outline-orange-400"
           type="text"
           name="country"
           defaultValue={address?.country}
@@ -65,7 +65,7 @@ export default function AddressBox({ address }: AddressBoxProps) {
           zip:
         </label>
         <input
-          className="p-2 w-fit outline outline-2 rounded outline-blue-500 focus:outline-orange-400"
+          className="p-2 w-full outline outline-2 rounded outline-blue-500 focus:outline-orange-400"
           type="text"
           name="zip"
           defaultValue={address?.zipCode}

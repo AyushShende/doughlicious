@@ -25,42 +25,44 @@ export default function PizzaOptions() {
     { errors: {} }
   );
 
-  if (actionState.errors._actionError) {
+  if (actionState?.errors._actionError) {
     toast.error(actionState.errors._actionError?.join(', '));
   }
   return (
-    <>
+    <div className="mb-8">
+      <label htmlFor="pizzaSize" className="block text-lg mb-2">
+        Choose Size:
+      </label>
       <select
+        id="pizzaSize"
         onChange={(e) => setPizzaSize(e.target.value as Size)}
-        className="my-4 block rounded bg-gray-100 px-1 py-1 outline-none"
+        className="block w-full rounded-md bg-gray-100 px-4 py-2 outline-none focus:border-2 focus:border-orange-300"
       >
-        <option value="SMALL">small</option>
-        <option value="MEDIUM">medium</option>
-        <option value="LARGE">large</option>
+        <option value="SMALL">Small</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="LARGE">Large</option>
       </select>
 
-      <div className="mb-6 flex w-fit items-center border-2 border-slate-400">
+      <div className="mt-4 flex items-center gap-4">
         <button
           disabled={quantity === 1}
           onClick={() => setQuantity((prev) => prev - 1)}
-          className="flex h-6 w-6 items-center justify-center disabled:cursor-not-allowed"
+          className="text-orange-500 bg-white border border-orange-500 px-4 py-2 rounded-full focus:outline-none disabled:opacity-50"
         >
           <FaMinus />
         </button>
-        <span className="flex h-6 w-8 items-center justify-center border-x-2 border-slate-400">
-          {quantity}
-        </span>
+        <span className="text-xl font-semibold">{quantity}</span>
         <button
-          className="flex h-6 w-6 items-center justify-center"
           onClick={() => setQuantity((prev) => prev + 1)}
+          className="text-orange-500 bg-white border border-orange-500 px-4 py-2 rounded-full focus:outline-none"
         >
           <FaPlus />
         </button>
       </div>
 
-      <form action={dispatch}>
+      <form className="mt-6" action={dispatch}>
         <FormButton>Add to Cart</FormButton>
       </form>
-    </>
+    </div>
   );
 }

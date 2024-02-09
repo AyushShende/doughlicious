@@ -1,15 +1,5 @@
-import { CartItem } from '@prisma/client';
-
 import CheckoutButton from './CheckoutButton';
-
-export type CartItemsWithPizza = CartItem & {
-  pizza: {
-    title: string;
-    image: string;
-    description: string;
-    price: number;
-  };
-};
+import { CartItemsWithPizza } from '@/lib/types';
 
 export default async function CartSummary({
   cartItems,
@@ -24,31 +14,31 @@ export default async function CartSummary({
   const charges = 0;
 
   return (
-    <div className="space-y-2 bg-gray-50 h-fit p-4">
+    <div className="bg-gray-50 p-4 space-y-4 rounded-lg">
       <div className="flex justify-between">
-        <span className="text-l font-semibold">Sub Total</span>
-        <span className="text-l font-semibold">₹{cartTotal || 0}</span>
+        <span className="text-lg font-semibold">Sub Total</span>
+        <span className="text-lg font-semibold">₹{cartTotal || 0}</span>
       </div>
       <div className="flex justify-between">
-        <span className="text-l font-semibold">Discount</span>
-        <span className="text-l font-semibold">
+        <span className="text-lg font-semibold">Discount</span>
+        <span className="text-lg font-semibold">
           {discount === 0 ? '-' : discount}
         </span>
       </div>
       <div className="flex justify-between">
-        <span className="text-l font-semibold">Taxes and Charges</span>
-        <span className="text-l font-semibold">
+        <span className="text-lg font-semibold">Taxes and Charges</span>
+        <span className="text-lg font-semibold">
           {charges === 0 ? '-' : charges}
         </span>
       </div>
       <hr />
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-2">
         <span className="text-xl font-semibold">Grand Total</span>
         <span className="text-xl font-semibold">
           ₹{cartTotal ? cartTotal - discount - charges : 0}
         </span>
       </div>
-      <hr />
+      <hr className="my-2" />
       <CheckoutButton />
     </div>
   );

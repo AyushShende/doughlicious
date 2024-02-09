@@ -16,7 +16,7 @@
 }
 
 .max-container {
-  @apply mx-auto max-w-[1440px];
+  @apply mx-auto max-w-[1440px] min-w-[350px];
 }
 
 .flex-center {
@@ -36,9 +36,10 @@
 }
 
 .sec-heading {
-  @apply capitalize text-3xl mb-2 font-bold text-gray-700;
+  @apply text-3xl md:text-4xl font-bold mb-8;
 }
 
 .sub-heading {
-  @apply uppercase font-semibold text-orange-400;
+  /* @apply uppercase font-semibold text-orange-400; */
+  @apply text-gray-500 text-sm uppercase tracking-widest;
 }

@@ -1,14 +1,15 @@
 import Image from 'next/image';
+import { Metadata } from 'next';
 
 import EmptyCart from '@/app/cart/EmptyCart';
 import CartSummary from '@/app/cart/CartSummary';
 import RemoveFromCartBtn from './RemoveFromCartBtn';
-import { fetchCartItems } from '@/actions/queries/cart';
+import { fetchCartItems } from '@/queries/cart';
 import AddressBox from './AddressBox';
-import { fetchAddress } from '@/actions/queries/address';
+import { fetchAddress } from '@/queries/address';
 
-export const metadata = {
-  title: 'Your Cart - Doughlicious',
+export const metadata: Metadata = {
+  title: 'Cart',
 };
 
 export default async function CartPage() {
@@ -20,9 +21,9 @@ export default async function CartPage() {
   }
 
   return (
-    <section className="padding-y padding-x max-container min-h-screen md:grid md:grid-cols-4 gap-6">
+    <section className="padding-y padding-x max-container min-h-screen md:grid md:grid-cols-6 gap-6">
       {/* CART ITEMS */}
-      <div className="col-span-3 mb-6">
+      <div className="col-span-4 mb-6">
         {cartItems.map((item) => {
           return (
             <div
@@ -31,20 +32,23 @@ export default async function CartPage() {
             >
               <RemoveFromCartBtn cartItemId={item.id} />
 
-              <Image width={150} height={150} src="/pizza4.png" alt="pizza" />
+              <Image
+                width={150}
+                height={150}
+                src={item.pizza.image}
+                alt="pizza"
+              />
               <div className="w-full space-y-2 p-4">
                 <div className="flex items-center gap-1">
                   <h4 className="text-xl capitalize font-semibold">
                     {item.pizza.title}
                   </h4>
-                  <span className="text-sm font-extralight">
-                    (x{item.quantity})
-                  </span>
+                  <span className="text-sm font-light">(x{item.quantity})</span>
                 </div>
 
-                <p className="">{item.pizza.description}</p>
-                <div className="flex justify-between">
-                  <p>Size: {item.size}</p>
+                <p className="text-gray-600">{item.pizza.description}</p>
+                <div className="flex justify-between items-center">
+                  <p className="text-sm">Size: {item.size}</p>
                   <p className="text-xl font-bold">
                     ₹{item.quantity * item.pizza.price}
                   </p>
@@ -55,7 +59,7 @@ export default async function CartPage() {
         })}
       </div>
 
-      <div className="space-y-4">
+      <div className="col-span-2 space-y-4 ">
         <AddressBox address={address} />
         <CartSummary cartItems={cartItems} />
       </div>

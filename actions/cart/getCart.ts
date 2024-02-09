@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
-import { getUser } from '../getUser';
-import { CartWithItems } from '../types';
+import { getUser } from '@/queries/getUser';
+import { CartWithItems } from '@/lib/types';
 import prisma from '@/lib/db';
 
 export async function getCart(): Promise<CartWithItems | null> {

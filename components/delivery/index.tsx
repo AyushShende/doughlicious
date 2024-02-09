@@ -14,9 +14,9 @@ export default function Delivery() {
         className="mx-auto"
       />
 
-      <div className="self-center text-center md:text-left">
-        <h2 className="sec-heading md:text-4xl">Express Delivery</h2>
-        <p className="mb-6">
+      <div className="text-center md:text-left">
+        <h2 className="sec-heading">Express Delivery</h2>
+        <p className="mb-6 leading-relaxed">
           We are the fastest pizzeria in town. That&apos;s why we promise that
           if we can&apos;t deliver to you within 30 minutes, the pizza is free.
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit
@@ -24,7 +24,7 @@ export default function Delivery() {
           unde esse placeat voluptates, quisquam quaerat porro maiores a? Sed,
           assumenda!
         </p>
-        <Link href="/menu">
+        <Link className="inline-block" href="/menu">
           <Button>Order Now</Button>
         </Link>
       </div>

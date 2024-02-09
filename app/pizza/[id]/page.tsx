@@ -1,8 +1,24 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
-import { getPizza } from '@/actions/queries/pizza';
+import { getPizza } from '@/queries/pizza';
 import PizzaOptions from '@/app/pizza/[id]/PizzaOptions';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const pizza = await getPizza(params.id);
+  return {
+    title: pizza?.title,
+    description: pizza?.description,
+    openGraph: {
+      images: [{ url: pizza?.image ?? '' }],
+    },
+  };
+}
 
 export default async function PizzaPage({
   params,
@@ -19,7 +35,7 @@ export default async function PizzaPage({
     <section className="padding-x padding-y max-container min-h-screen grid gap-4 md:grid-cols-2 md:gap-10">
       <Image
         className="justify-self-center object-cover"
-        src="/pizza3.png"
+        src={pizza.image}
         width={500}
         height={500}
         alt="pizza"

@@ -1,9 +1,10 @@
 'use server';
+
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import prisma from '@/lib/db';
-import { ActionState, AddToCartParams, CartWithItems } from '../types';
+import { ActionState, AddToCartParams, CartWithItems } from '@/lib/types';
 import { getCart } from './getCart';
 import { createCart } from './createCart';
 

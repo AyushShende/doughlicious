@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import prisma from '@/lib/db';
-import { ActionState } from '../types';
+import { ActionState } from '@/lib/types';
 
 export async function removeFromCart(
   cartItemId: string,

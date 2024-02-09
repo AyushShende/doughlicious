@@ -1,18 +1,19 @@
 'use server';
+
 import type { Stripe } from 'stripe';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 
-import { ActionState } from './types';
+import { ActionState } from '@/lib/types';
 import { stripe } from '@/lib/stripe';
 import prisma from '@/lib/db';
-import { getUser } from './getUser';
+import { getUser } from '@/queries/getUser';
 
 export async function createCheckoutSession(): Promise<ActionState> {
   const user = await getUser();
 
   if (!user) {
-    redirect(`/api/auth/signin?callbackUrl=${process.env.PROJECT_URL}/cart`);
+    redirect(`/api/auth/signin`);
   }
 
   const cart = await prisma.cart.findFirst({

@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { PaidOrder } from '@/actions/types';
+import { PaidOrder } from '@/lib/types';
 import TableRow from './TableRow';
 import { supabaseClient } from '@/lib/supabase';
+import { OrderStatus } from '@prisma/client';
 
 export default function Table({
   initialOrders,
@@ -30,19 +31,37 @@ export default function Table({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supabaseClient]);
 
+  useEffect(() => {
+    const orderStatusChangeChannel = supabaseClient
+      .channel('order_status_changed')
+      .on('broadcast', { event: 'status_update' }, ({ payload }) => {
+        setOrders((prevOrders) =>
+          payload.updatedOrder.orderStatus === OrderStatus.Completed
+            ? prevOrders.filter((order) => order.id !== payload.updatedOrder.id)
+            : prevOrders
+        );
+      })
+      .subscribe();
+
+    return () => {
+      supabaseClient.removeChannel(orderStatusChangeChannel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [supabaseClient]);
+
   if (!orders.length) {
-    return <p>No orders to display!</p>;
+    return <p>No Pending Orders!</p>;
   }
 
   return (
-    <table className="w-full border-separate border-spacing-3">
-      <thead>
+    <table className="min-w-full border-collapse border border-gray-300">
+      <thead className="bg-gray-200">
         <tr className="text-left">
-          <th className="">Order</th>
-          <th>Customer</th>
-          <th>Status</th>
-          <th className="">Address</th>
-          <th>Placed At</th>
+          <th className="px-4 py-2">Order</th>
+          <th className="px-4 py-2">Customer</th>
+          <th className="px-4 py-2">Status</th>
+          <th className="px-4 py-2">Address</th>
+          <th className="px-4 py-2">Placed At</th>
         </tr>
       </thead>
       <tbody>

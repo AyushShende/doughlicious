@@ -7,12 +7,11 @@ import { createCheckoutSession } from '@/actions/stripe';
 import FormButton from '@/components/formButton';
 
 export default function CheckoutButton() {
-  const [actionState, dispatch] = useFormState(
-    createCheckoutSession.bind(null),
-    { errors: {} }
-  );
+  const [actionState, dispatch] = useFormState(createCheckoutSession, {
+    errors: {},
+  });
 
-  if (actionState.errors._actionError) {
+  if (actionState?.errors._actionError) {
     toast.error(actionState.errors._actionError?.join(', '));
   }
   return (

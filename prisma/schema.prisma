@@ -103,7 +103,7 @@ model OrderItem {
   orderId  String
   order    Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
   pizzaId  String
-  pizza    Pizza  @relation(fields: [pizzaId], references: [id])
+  pizza    Pizza  @relation(fields: [pizzaId], references: [id], onDelete: Cascade)
   quantity Int
   size     Size
   price    Float
@@ -123,7 +123,7 @@ model CartItem {
   cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId    String
   pizzaId   String
-  pizza     Pizza    @relation(fields: [pizzaId], references: [id])
+  pizza     Pizza    @relation(fields: [pizzaId], references: [id], onDelete: Cascade)
   quantity  Int
   size      Size
   createdAt DateTime @default(now())

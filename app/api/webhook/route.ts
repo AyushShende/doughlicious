@@ -4,7 +4,7 @@ import { OrderStatus } from '@prisma/client';
 
 import { stripe } from '@/lib/stripe';
 import prisma from '@/lib/db';
-import { getSinglePaidOrder } from '@/actions/queries/order';
+import { getSinglePaidOrder } from '@/queries/order';
 import { supabaseClient } from '@/lib/supabase';
 
 export async function POST(req: Request) {

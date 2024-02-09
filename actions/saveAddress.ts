@@ -5,20 +5,20 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import prisma from '@/lib/db';
-import { getUser } from './getUser';
-import { SaveAddressFormState } from './types';
+import { getUser } from '@/queries/getUser';
+import { SaveAddressFormState } from '@/lib/types';
 
 const saveAddressSchema = z.object({
-  street: z.string().min(4, {
+  street: z.string().trim().min(4, {
     message: 'Must be more than 4 characters',
   }),
-  city: z.string({ required_error: 'Please enter city' }).min(3, {
+  city: z.string({ required_error: 'Please enter city' }).trim().min(3, {
     message: 'Must be more than 3 characters',
   }),
-  country: z.string({ required_error: 'Please enter country' }).min(3, {
+  country: z.string({ required_error: 'Please enter country' }).trim().min(3, {
     message: 'Must be more than 3 characters',
   }),
-  zip: z.string({ required_error: 'Please enter zip code' }).min(6, {
+  zip: z.string({ required_error: 'Please enter zip code' }).trim().min(6, {
     message: 'Must be more than 6 characters',
   }),
 });

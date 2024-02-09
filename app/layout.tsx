@@ -8,7 +8,10 @@ import Footer from '@/components/footer';
 import AuthProvider from '@/context/AuthProvider';
 
 export const metadata: Metadata = {
-  title: 'Doughlicious',
+  title: {
+    default: 'Doughlicious',
+    template: '%s - Doughlicious',
+  },
   description: 'Best pizzeria in town',
 };
 

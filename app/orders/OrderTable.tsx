@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { OrderWithAddress } from '@/actions/types';
+import { OrderWithAddress } from '@/lib/types';
 import OrderStatusModal from './OrderStatusModal';
 import { supabaseClient } from '@/lib/supabase';
 
@@ -39,32 +39,35 @@ export default function OrderTable({ orders }: { orders: OrderWithAddress[] }) {
   }
 
   return (
-    <table className="min-w-full border-separate border-spacing-3">
-      <thead>
+    <table className="min-w-full border-collapse border border-gray-300">
+      <thead className="bg-gray-200">
         <tr className="text-left">
-          <th className="">Orders</th>
-          <th>Time</th>
-          <th className="">Address</th>
-          <th className="">Amount</th>
+          <th className="px-4 py-2">Orders</th>
+          <th className="px-4 py-2">Time</th>
+          <th className="px-4 py-2">Address</th>
+          <th className="px-4 py-2">Amount</th>
         </tr>
       </thead>
       <tbody>
         {orderList?.map((order) => (
-          <tr key={order.id} className="bg-gray-100">
-            <td className="px-2 py-1 sm:py-3">
+          <tr
+            key={order.id}
+            className="hover:bg-gray-50 transition duration-300"
+          >
+            <td className="px-4 py-2">
               <OrderStatusModal
                 orderStatus={order.orderStatus}
                 orderId={order.id}
               />
             </td>
-            <td className="px-2 py-1 sm:py-3">
+            <td className="px-4 py-2">
               {order.updatedAt.toLocaleTimeString()}{' '}
               {order.updatedAt.toLocaleDateString()}
             </td>
-            <td className="px-2 py-1 sm:py-3">
+            <td className="px-4 py-2">
               {order.address.street} {order.address.city}
             </td>
-            <td className="px-2 py-1 sm:py-3">₹{order.totalValue}</td>
+            <td className="px-4 py-2">₹{order.totalValue}</td>
           </tr>
         ))}
       </tbody>

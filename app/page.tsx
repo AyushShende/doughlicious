@@ -5,7 +5,7 @@ import Testimonials from '@/components/testimonials';
 
 export default function Home() {
   return (
-    <section>
+    <section className="max-container">
       <Hero />
       <FeaturedPizza />
       <Delivery />

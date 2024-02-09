@@ -2,13 +2,12 @@ import Link from 'next/link';
 import { FaShoppingCart, FaBars } from 'react-icons/fa';
 
 import Logo from '@/components/logo';
-
-import { fetchCartItems } from '@/actions/queries/cart';
 import HeaderAuth from './HeaderAuth';
+import { fetchCartItems } from '@/queries/cart';
+import MobileNavigation from './MobileNavigation';
 
 export default async function Navbar() {
   const cartItems = await fetchCartItems();
-
   const cartSize =
     cartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
@@ -30,8 +29,19 @@ export default async function Navbar() {
         <HeaderAuth />
       </div>
 
+      <Link className="md:hidden" href="/cart">
+        <div className="relative">
+          <FaShoppingCart size={26} />
+          <span className="absolute -right-3 -top-3 h-6 w-6 rounded-full bg-gray-100 text-center text-orange-500">
+            {cartSize}
+          </span>
+        </div>
+      </Link>
+
       {/* MOBILE HAMBURGER MENU */}
-      <FaBars size={26} className="md:hidden" />
+      <div className="md:hidden">
+        <MobileNavigation />
+      </div>
     </nav>
   );
 }
